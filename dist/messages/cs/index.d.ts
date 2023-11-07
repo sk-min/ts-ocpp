@@ -1,0 +1,10 @@
+import { OCPPVersion, OCPPVersionV15, OCPPVersionV16 } from '../../types';
+import JSONCentralSystemMessage from './json';
+import SOAPCentralSystemMessage from './soap';
+declare type CentralSystemMessage<V extends OCPPVersion = OCPPVersion> = V extends OCPPVersionV16 ? JSONCentralSystemMessage : V extends OCPPVersionV15 ? SOAPCentralSystemMessage : never;
+export declare type CentralSystemAction<V extends OCPPVersion = OCPPVersion> = keyof CentralSystemMessage<V>;
+export declare const centralSystemActions: CentralSystemAction<'v1.6-json'>[];
+export declare const soapCentralSystemActions: CentralSystemAction<'v1.5-soap'>[];
+export declare type CentralSystemRequest<T extends CentralSystemAction, V extends OCPPVersion = OCPPVersion> = CentralSystemMessage<V>[T]['request'];
+export declare type CentralSystemResponse<T extends CentralSystemAction, V extends OCPPVersion = OCPPVersion> = CentralSystemMessage<V>[T]['response'];
+export default CentralSystemMessage;
